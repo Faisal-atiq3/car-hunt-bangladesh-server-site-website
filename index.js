@@ -25,6 +25,7 @@ try{
     const database =client.db('travel_user')
     const servicesCollection = database.collection('services');
     const OrderCollection = database.collection('AllOrder');
+    const usersCollention = database.collection('users');
 
     //get api
     app.get('/services', async(req, res)=>{
@@ -45,29 +46,49 @@ try{
     
     });
 
-    //customerOrder get
-    app.get('/customerOrder', async (req, res )=>{
-      const cursor = customerOrderCollection.find({});
-      const customerOrderCollection = await cursor.toArray();
-      res.json(customerOrderCollection);
-    });
+    // //customerOrder get
+    // app.get('/customerOrder', async (req, res )=>{
+    //   const cursor = customerOrderCollection.find({});
+    //   const customerOrderCollection = await cursor.toArray();
+    //   res.json(customerOrderCollection);
+    // });
+
+    app.get('/users', async (req , res )=>{
+      const cursor = usersCollention.find({});
+      const usersCollection = await cursor.toArray();
+      res.json(usersCollection);
+    })
 
       
 
-      //customerOrder post
-      app.post('/customerOrder', async( req, res)=> {
-        const customerOrder = req.body;
-        const result = await customerOrderCollection.insertOne(customerOrder);
+      //user post
+      app.post('/users', async( req, res)=> {
+        const user = req.body;
+        console.log(user)
+        const result = await usersCollention.insertOne(user);
         console.log(result);
         res.json(result)
       });
 
-      app.put('/users/admin',async(req,res)=>{
-        const user = req.body;
-        const filter ={email : user.email};
-        const updateDoc={$set: {role:'admin'}};
-        const result = await userCollection.updateOne()
-      })
+
+      
+
+
+      // app.put('users', async(req, res)=>{
+      //   const user = req.body;
+      //   const filter ={ email: user.email};
+      //   const options = {upsert: true};
+      //   const updateDoc ={$set: user};
+      //   const result = usersCollention.updateOne(filter, updateDoc, options);
+      //   res.json(result);
+      // })
+
+      // app.put('/users/admin',async(req,res)=>{
+      //   const user = req.body;
+      //   const filter ={email : user.email};
+      //   const updateDoc={$set: {role:'admin'}};
+      //   const result = await usersCollection.updateOne()
+      // })
 
 
 
