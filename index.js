@@ -26,6 +26,7 @@ try{
     const servicesCollection = database.collection('services');
     const OrderCollection = database.collection('AllOrder');
     const usersCollention = database.collection('users');
+    const reviewCollention = database.collection('review');
 
     //get api
     app.get('/services', async(req, res)=>{
@@ -46,13 +47,8 @@ try{
     
     });
 
-    // //customerOrder get
-    // app.get('/customerOrder', async (req, res )=>{
-    //   const cursor = customerOrderCollection.find({});
-    //   const customerOrderCollection = await cursor.toArray();
-    //   res.json(customerOrderCollection);
-    // });
-
+    
+          // user get
     app.get('/users', async (req , res )=>{
       const cursor = usersCollention.find({});
       const usersCollection = await cursor.toArray();
@@ -69,6 +65,24 @@ try{
         console.log(result);
         res.json(result)
       });
+
+      //review post
+
+      app.post ('/review', async(req, res)=>{
+        const user =req.body;
+        const review = req.body;
+        console.log(review)
+        const result = await reviewCollention.insertOne(review);
+        console.log(result);
+        res.json(result)
+      })
+
+      //review get 
+      app.get('/review', async (req , res )=>{
+        const cursor = reviewCollention.find({});
+        const reviewCollention = await cursor.toArray();
+        res.json(reviewCollention);
+      })
 
 
       
